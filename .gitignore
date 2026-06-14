@@ -1,0 +1,7 @@
+# Build output
+build/
+
+# Vendored DuckDB C library (fetched via scripts/fetch-duckdb.sh)
+third_party/duckdb/
+
+.DS_Store

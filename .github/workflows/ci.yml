@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: build & test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cmocka (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libcmocka-dev unzip
+
+      - name: Install cmocka (macOS)
+        if: runner.os == 'macOS'
+        run: brew install cmocka
+
+      - name: Fetch DuckDB C library
+        run: ./scripts/fetch-duckdb.sh
+
+      - name: Build
+        run: make
+
+      - name: Test
+        run: make test
+
+      - name: Smoke-test --version and --help
+        run: |
+          ./build/parquet_viewer --version
+          ./build/parquet_viewer --help
