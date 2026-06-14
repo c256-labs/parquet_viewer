@@ -11,14 +11,46 @@ re-reads just the new window. A 50 GB file uses roughly the same memory as a
 
 ## Install
 
-### Homebrew
+### Homebrew (macOS / Linux)
 
 ```bash
 brew install c256-labs/tap/parquet_viewer
 ```
 
-This pulls in `duckdb` from Homebrew and builds `parquet_viewer` against it.
-See [PUBLISHING.md](PUBLISHING.md) for how the tap and formula are set up.
+This auto-taps `c256-labs/tap`, pulls in `duckdb` from Homebrew, and builds
+`parquet_viewer` from source against it. Because it compiles, the first install
+needs a C compiler (on macOS the Xcode Command Line Tools, which Homebrew
+installs automatically) and is not instant.
+
+### Try it
+
+```bash
+# grab a small sample Parquet file
+curl -L -o /tmp/weather.parquet \
+  https://github.com/c256-labs/parquet_viewer/raw/main/testdata/weather.parquet
+
+# non-interactive sanity check (no TUI)
+parquet_viewer --probe /tmp/weather.parquet
+
+# the full TUI — j/k to scroll, d/s/S to switch views, q to quit
+parquet_viewer /tmp/weather.parquet
+```
+
+`parquet_viewer` is a terminal UI, so it needs a real interactive terminal;
+use `--probe` in scripts or pipelines.
+
+### Upgrade / uninstall
+
+```bash
+brew update && brew upgrade parquet_viewer   # update to the latest release
+brew uninstall parquet_viewer                # remove the binary
+brew untap c256-labs/tap                      # remove the tap
+```
+
+The Homebrew formula lives in the separate
+[`c256-labs/homebrew-tap`](https://github.com/c256-labs/homebrew-tap) repo; see
+its [PUBLISHING.md](https://github.com/c256-labs/homebrew-tap/blob/main/PUBLISHING.md)
+for how the tap and formula are maintained.
 
 ## Requirements (build from source)
 
