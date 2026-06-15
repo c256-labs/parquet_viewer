@@ -9,7 +9,7 @@ BUILD ?= build
 # Reported by `parquet_viewer --version`; override to match the release tag.
 VERSION ?= 0.1.0
 
-CFLAGS ?= -O2 -std=c99 -Wall -Wextra
+CFLAGS ?= -O2 -std=gnu99 -Wall -Wextra
 CPPFLAGS += -I$(DUCKDB_INCLUDE) -DPV_VERSION='"$(VERSION)"'
 LDFLAGS += -L$(DUCKDB_LIB)
 LDLIBS += -lduckdb
@@ -25,7 +25,8 @@ ifeq ($(UNAME_S),Darwin)
 	LDFLAGS += -Wl,-rpath,$(DUCKDB_RPATH)
 endif
 ifeq ($(UNAME_S),Linux)
-	DUCKDB_RPATH ?= $$ORIGIN/../$(DUCKDB_DIR)
+	# Escape the $ so the linker (not the shell) sees a literal $ORIGIN.
+	DUCKDB_RPATH ?= \$$ORIGIN/../$(DUCKDB_DIR)
 	LDFLAGS += -Wl,-rpath,$(DUCKDB_RPATH)
 endif
 
