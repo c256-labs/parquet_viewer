@@ -266,7 +266,7 @@ static void render_data(App *a, Buf *b, int H, int W) {
     idx_t nrows = ok ? duckdb_row_count(&res) : 0;
 
     /* Per-page column widths from header + visible cells (clamped). */
-    int *w = (int *)calloc(a->ncols ? a->ncols : 1, sizeof(int));
+    int *w = (int *)calloc((size_t)(a->ncols > 0 ? a->ncols : 1), sizeof(int));
     for (int c = 0; c < a->ncols; c++) {
         int width = (int)strlen(a->cols[c].name);
         for (idx_t r = 0; r < nrows; r++) {

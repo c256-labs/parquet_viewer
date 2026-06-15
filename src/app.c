@@ -32,7 +32,7 @@ int run_command(App *a) {
         if (row > 0) row -= 1; /* 1-based input */
         goto_row(a, row);
     } else if (c[0] != '\0') {
-        snprintf(a->status, sizeof(a->status), "unknown command: %s", c);
+        snprintf(a->status, sizeof(a->status), "unknown command: %.238s", c);
     }
     return 0;
 }
