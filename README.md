@@ -9,6 +9,10 @@ The viewer reads the row count from the Parquet footer, the schema via
 re-reads just the new window. A 50 GB file uses roughly the same memory as a
 5 MB one.
 
+## Screenshots
+
+![parquet_viewer DATA view](parquet_viewer_screenshot.png)
+
 ## Install
 
 ### Homebrew (macOS / Linux)
