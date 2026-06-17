@@ -1,4 +1,4 @@
-# parquet_viewer
+# A Tiny Parquet Viewer
 
 A terminal UI for browsing Parquet files. One small C binary that
 browses a Parquet file full-screen in the terminal — efficient on memory and
